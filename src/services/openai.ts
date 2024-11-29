@@ -23,6 +23,7 @@ Instruções para Criar as Dicas:
 - As dicas podem variar entre fáceis, medianas e difíceis, sem revelar diretamente a resposta.
 - Não se deve repetir dicas de uma carta para outra.
 - As dicas devem ser 100% verídicas e relacionadas ao perfil.
+- As dicas não devem usar a palavra da resposta ou variações dela. Utilize termos como 'eu', 'minhas versões', 'algumas de mim' para evitar dar a resposta diretamente.
 
 Requisitos para as Cartas:
 
