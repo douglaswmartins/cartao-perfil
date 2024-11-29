@@ -90,8 +90,8 @@ function setTheme() {
             <font-awesome-icon v-else icon="eye" />
           </button>
         </span>
-        <h2 v-if="card && !loading" :class="{ hide: hideText }">
-          {{ card ? card.answer : "" }}
+        <h2 v-if="card && !loading">
+          {{ !hideText ? card.answer : "" }}
         </h2>
         <h2 v-else-if="loading">Carregando Cartão...</h2>
         <h2 v-else>Criador de Carta Perfil</h2>
