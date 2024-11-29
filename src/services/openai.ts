@@ -74,7 +74,8 @@ Requisitos Adicionais:
 - Sempre envie apenas o JSON no formato correto.
 - Propriedades como answer, category, e hints agora estão entre aspas duplas (").
 - O JSON precisa ter aspas duplas para as chaves e os valores (exceto quando o valor for um número ou null, que pode ser sem aspas).
-- o numero de hints (Dicas) tem que ser exatos 17`;
+- o numero de hints (Dicas) tem que ser exatos 17
+- Os nomes de Lugares e coisas tem que ser em PT-BR`;
 
 const openaiClient = axios.create({
   baseURL: "https://api.openai.com",
