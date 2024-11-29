@@ -17,7 +17,6 @@ const loading = ref(false);
 
 const speakingText = reactive<{ [key: number]: boolean }>({});
 let currentUtterance: SpeechSynthesisUtterance | null = null;
-const voice = window.speechSynthesis.getVoices()[19];
 
 let card = ref<Card>();
 
@@ -27,6 +26,8 @@ const loadNewCard = async () => {
     hideText.value = false;
     loading.value = true;
     const response = (await getCardHints()) as Card;
+    console.log(response);
+
     if (response.answer) {
       card.value = response;
       card.value.hints = populateInstructions(card.value.hints.slice(0, 17));
@@ -70,9 +71,10 @@ const speak = (text: string, index: number) => {
   window.speechSynthesis.cancel();
   Object.keys(speakingText).forEach((key) => (speakingText[+key] = false));
 
+  const voices = window.speechSynthesis.getVoices();
   currentUtterance = new SpeechSynthesisUtterance(text);
   currentUtterance.lang = "pt-BR";
-  currentUtterance.voice = voice;
+  currentUtterance.voice = voices[19];
 
   speakingText[index] = true;
 
