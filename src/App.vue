@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { Card } from "./util/model/card";
 import { ECategories } from "./util/enum/categories.enum";
 import { populateInstructions } from "./util/instructions";
@@ -11,10 +11,13 @@ const isDarkModePreferred = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
 const darkTheme = ref(isDarkModePreferred);
-setTheme();
 
 const hideText = ref(false);
 const loading = ref(false);
+
+const speakingText = reactive<{ [key: number]: boolean }>({});
+let currentUtterance: SpeechSynthesisUtterance | null = null;
+const voice = window.speechSynthesis.getVoices()[19];
 
 let card = ref<Card>();
 
@@ -40,12 +43,12 @@ const handleShow = () => {
   hideText.value = !hideText.value;
 };
 
-function switchTheme() {
+const switchTheme = () => {
   darkTheme.value = !darkTheme.value;
   setTheme();
-}
+};
 
-function setTheme() {
+const setTheme = () => {
   if (darkTheme.value) {
     localStorage.setItem("theme", "dark");
     document.documentElement.setAttribute("data-theme", "dark");
@@ -53,7 +56,38 @@ function setTheme() {
     localStorage.setItem("theme", "light");
     document.documentElement.setAttribute("data-theme", "light");
   }
-}
+};
+setTheme();
+
+const speak = (text: string, index: number) => {
+  if (speakingText[index] && currentUtterance) {
+    window.speechSynthesis.cancel();
+    speakingText[index] = false;
+    currentUtterance = null;
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  Object.keys(speakingText).forEach((key) => (speakingText[+key] = false));
+
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.lang = "pt-BR";
+  currentUtterance.voice = voice;
+
+  speakingText[index] = true;
+
+  currentUtterance.onend = () => {
+    speakingText[index] = false;
+    currentUtterance = null;
+  };
+
+  currentUtterance.onerror = () => {
+    speakingText[index] = false;
+    currentUtterance = null;
+  };
+
+  window.speechSynthesis.speak(currentUtterance);
+};
 </script>
 
 <template>
@@ -108,6 +142,17 @@ function setTheme() {
             :key="index"
             :class="{ blur: hideText }"
           >
+            <button
+              class="icon p-0"
+              :style="{
+                'padding-right': !speakingText[index] ? '8px !important' : '',
+              }"
+              @click="speak(text, index)"
+            >
+              <font-awesome-icon
+                :icon="speakingText[index] ? 'volume-high' : 'volume-off'"
+              />
+            </button>
             {{ `${index + 1}. ${text}` }}
           </p>
           <div v-if="hideText" class="card-hide">

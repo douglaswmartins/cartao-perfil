@@ -14,10 +14,22 @@ import {
   faBan,
   faMoon,
   faSun,
+  faVolumeHigh,
+  faVolumeOff,
 } from "@fortawesome/free-solid-svg-icons";
 import { ContentLoader } from "vue-content-loader";
 
-library.add(faHistory, faArrowRight, faEye, faEyeSlash, faBan, faMoon, faSun);
+library.add(
+  faHistory,
+  faArrowRight,
+  faEye,
+  faEyeSlash,
+  faBan,
+  faMoon,
+  faSun,
+  faVolumeHigh,
+  faVolumeOff
+);
 
 const app = createApp(App);
 

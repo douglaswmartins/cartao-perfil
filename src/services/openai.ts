@@ -117,7 +117,7 @@ export async function getCardHintsMock() {
   }
 }
 
-function mockResult(error = false) {
+const mockResult = (error = false) => {
   return new Promise<Card>((resolve, reject) => {
     const card: Card = {
       answer: "NAPOLEÃO BONAPARTE",
@@ -148,4 +148,4 @@ function mockResult(error = false) {
       reject("Erro carai");
     }
   });
-}
+};
