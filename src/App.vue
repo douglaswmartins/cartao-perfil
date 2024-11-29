@@ -63,7 +63,7 @@ function setTheme() {
         <font-awesome-icon icon="history" />
       </button> -->
       <button class="primary" @click="switchTheme">
-        <font-awesome-icon icon="sun" />
+        <font-awesome-icon :icon="darkTheme ? 'sun' : 'moon'" />
       </button>
       <button class="primary" @click="loadNewCard" v-if="card">
         <font-awesome-icon icon="arrow-right" />
